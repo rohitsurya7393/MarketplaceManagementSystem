@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <title>DMQL TEAM</title>
+    <style>
+        body {
+            text-align: center; 
+            background-color: rgb(250, 208, 208);
+        }
+        h2 {
+            margin-top: 50px; 
+            text-align: center; 
+            color: red;
+        }
+        form {
+            display: inline-block; 
+            text-align: left; 
+            margin-top: 20px; 
+        }
+        input[type="submit"] {
+            font-weight: bold; 
+            padding: 10px 20px; 
+            font-size: 20px; 
+        }
+        textarea {
+            font-size: 16px; 
+            width: 100%; 
+        }
+        table {
+            margin: 0 auto;
+        }
+    </style>
+    <script>
+        function Call_query(query) {
+            var textarea = document.getElementById('query');
+            textarea.value = query;
+            textarea.form.submit();
+        }
+    </script>
+</head>
+<body>
+    <h2>**** PLEASE ENTER SQL QUERY HERE ****</h2>
+    <form method="post">
+        
+        <input type="button" value="Products" onclick="Call_query('select * from Products;')">
+        <input type="button" value="Transactions" onclick="Call_query('select * from Transactions')">
+        <input type="button" value="Orders" onclick="Call_query('select * from Orders;')">
+        <input type="button" value="Customer - transactions" onclick="Call_query('select t.customer_id,c.customer_name , count(*)  from transactions t join customer_details c on t.customer_id = c.customer_id group by t.customer_id,c.customer_name order by count(*) desc;')">
+        <input type="button" value="Customers from each Region" onclick="Call_query('SELECT a.Region,COUNT(cd.Customer_ID) AS Number_of_Customers FROM Address a JOIN Customer_details cd ON a.Postal_Code = cd.Postal_Code GROUP BY a.Region ORDER BY Number_of_Customers DESC;')">
+        <input type="button" value="Product Transaction Value" onclick="Call_query('SELECT c.Category,AVG(t.Final_price) AS Avg_Transaction_Value FROM Categories c JOIN Products p ON c.Category_ID = p.Category_ID JOIN Transactions t ON p.Product_ID = t.Product_ID GROUP BY c.Category;')">
+        <textarea id="query" name="query" rows="10" cols="80">{{ query }}</textarea><br>
+        <input type="submit" value="Run Query">
+    </form>
+    {% if results %}
+        <h2>**** Query Results ****</h2>
+        <table class = "table" border="2">
+            <tr>
+                {% for col in columns %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in results %}
+                <tr>
+                    {% for col in columns %}
+                        <td>{{ row[col] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
