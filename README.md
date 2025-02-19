@@ -23,10 +23,10 @@ Ensure you have the following installed:
 - Pandas, NumPy
 - `psycopg2-binary` (for PostgreSQL connectivity)
 
-# Input dataset : https://www.kaggle.com/datasets/vivek468/superstore-dataset-final
+ **Input dataset : https://www.kaggle.com/datasets/vivek468/superstore-dataset-final**
 
 **Data Preprocessing**
- - The input dataset is imported into Jupyter notebook (Transformation.ipnyb) and the pre 	         processing is done.
+ - The input dataset is imported into Jupyter notebook (Transformation.ipnyb) and the preprocessing is done.
 
  - Unnecessary columns are removed and Dummy Data is added in the first stage of Data Transformation.
 
